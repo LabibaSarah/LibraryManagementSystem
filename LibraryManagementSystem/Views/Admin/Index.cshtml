@@ -1,0 +1,440 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="admin-dashboard">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="admin-header">
+
+        <div>
+            <h1>
+                Admin Dashboard
+            </h1>
+
+            <p>
+                Welcome to the IUBAT Central Library Management System.
+            </p>
+        </div>
+
+
+        <div class="dashboard-header-actions">
+
+            <div class="library-status">
+                <span class="status-dot"></span>
+                Library Management
+            </div>
+
+            <form asp-area="Identity"
+                  asp-page="/Account/Logout"
+                  method="post"
+                  class="d-inline">
+
+                <button type="submit"
+                        class="dashboard-logout-btn">
+                    🚪 Logout
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <div class="row g-4 mb-5">
+
+        <!-- Total Books -->
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="admin-stat-card">
+
+                <div class="stat-icon">
+                    📚
+                </div>
+
+                <div>
+                    <h3>
+                        @ViewBag.TotalBooks
+                    </h3>
+
+                    <p>
+                        Total Books
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Total Users -->
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="admin-stat-card">
+
+                <div class="stat-icon">
+                    👥
+                </div>
+
+                <div>
+                    <h3>
+                        @ViewBag.TotalUsers
+                    </h3>
+
+                    <p>
+                        Total Users
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Borrowed Books -->
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="admin-stat-card">
+
+                <div class="stat-icon">
+                    📖
+                </div>
+
+                <div>
+                    <h3>
+                        @ViewBag.BorrowedBooks
+                    </h3>
+
+                    <p>
+                        Borrowed Books
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Overdue Books -->
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="admin-stat-card">
+
+                <div class="stat-icon warning">
+                    ⚠️
+                </div>
+
+                <div>
+                    <h3>
+                        @ViewBag.OverdueBooks
+                    </h3>
+
+                    <p>
+                        Overdue Books
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= MANAGEMENT ================= -->
+
+    <div class="admin-section">
+
+        <div class="section-heading">
+
+            <h2>
+                Library Management
+            </h2>
+
+            <p>
+                Manage the main operations of the library.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- Manage Books -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="admin-action-card">
+
+                    <div class="action-icon">
+                        📚
+                    </div>
+
+                    <h4>
+                        Manage Books
+                    </h4>
+
+                    <p>
+                        Add, edit, delete and manage library books.
+                    </p>
+
+                    <a asp-controller="Books"
+                       asp-action="Index"
+                       class="admin-action-btn">
+                        Manage Books →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Issue & Return -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="admin-action-card">
+
+                    <div class="action-icon">
+                        🔄
+                    </div>
+
+                    <h4>
+                        Issue & Return
+                    </h4>
+
+                    <p>
+                        Manage book issuing and returning.
+                    </p>
+
+                    <a asp-controller="Transactions"
+                       asp-action="Index"
+                       class="admin-action-btn">
+                        Issue & Return →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Users -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="admin-action-card">
+
+                    <div class="action-icon">
+                        👥
+                    </div>
+
+                    <h4>
+                        Users
+                    </h4>
+
+                    <p>
+                        Manage students, faculty and library users.
+                    </p>
+
+                    <a asp-controller="Admin"
+                       asp-action="Users"
+                       class="admin-action-btn">
+                        Manage Users →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Notices -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="admin-action-card">
+
+                    <div class="action-icon">
+                        📢
+                    </div>
+
+                    <h4>
+                        Notices
+                    </h4>
+
+                    <p>
+                        Create and manage library notices.
+                    </p>
+
+                    <a asp-controller="Notice"
+                       asp-action="Index"
+                       class="admin-action-btn">
+                        Manage Notices →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Reports -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="admin-action-card">
+
+                    <div class="action-icon">
+                        📊
+                    </div>
+
+                    <h4>
+                        Reports
+                    </h4>
+
+                    <p>
+                        View library reports and analytics.
+                    </p>
+
+                    <a asp-controller="Reports"
+                       asp-action="Index"
+                       class="admin-action-btn">
+                        View Reports →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Library Status -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="admin-action-card">
+
+                    <div class="action-icon">
+                        🟢
+                    </div>
+
+                    <h4>
+                        Library Status
+                    </h4>
+
+                    <p>
+                        Control library open and closed status.
+                    </p>
+
+                    <a asp-controller="LibraryStatus"
+                       asp-action="Index"
+                       class="admin-action-btn">
+                        Manage Status →
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Manage Categories -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="admin-action-card">
+
+                    <div class="action-icon">
+                        🗂️
+                    </div>
+
+                    <h4>
+                        Manage Categories
+                    </h4>
+
+                    <p>
+                        Add and manage categories for organizing library books.
+                    </p>
+
+                    <a asp-controller="Categories"
+                       asp-action="Index"
+                       class="admin-action-btn">
+                        Manage Categories →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= DIGITAL RESOURCES ================= -->
+
+    <div class="admin-section mt-5">
+
+        <div class="section-heading">
+
+            <h2>
+                Digital Resources
+            </h2>
+
+            <p>
+                Manage the library's digital learning materials.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="admin-action-card">
+
+                    <div class="action-icon">
+                        💻
+                    </div>
+
+                    <h4>
+                        Manage E-Books
+                    </h4>
+
+                    <p>
+                        Upload, view and manage digital library books.
+                    </p>
+
+                    <a asp-controller="EBooks"
+                       asp-action="Index"
+                       class="admin-action-btn">
+                        Manage E-Books →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= BACK TO HOME ================= -->
+
+    <div class="text-center mt-5 mb-4">
+
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="back-home-btn">
+            ← Back to Home
+        </a>
+
+    </div>
+
+</div>

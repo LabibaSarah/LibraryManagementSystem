@@ -1,0 +1,252 @@
+@model LibraryManagementSystem.Models.Book
+
+@{
+    ViewData["Title"] = "Add New Book";
+}
+
+<div class="book-create-page">
+
+    <div class="book-create-container">
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="book-create-header">
+
+            <div class="book-header-icon">
+                📖
+            </div>
+
+            <div>
+                <h1>
+                    Book Information
+                </h1>
+
+                <p>
+                    Enter the details of the new library book.
+                </p>
+            </div>
+
+        </div>
+
+
+        <hr />
+
+
+        <!-- ================= FORM ================= -->
+
+        <form asp-action="Create" method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-4">
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <!-- Book Title -->
+
+                <div class="col-md-6">
+
+                    <label asp-for="Title"
+                           class="form-label">
+                        Book Title
+                    </label>
+
+                    <input asp-for="Title"
+                           class="form-control book-input"
+                           placeholder="Enter book title" />
+
+                    <span asp-validation-for="Title"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Author -->
+
+                <div class="col-md-6">
+
+                    <label asp-for="Author"
+                           class="form-label">
+                        Author
+                    </label>
+
+                    <input asp-for="Author"
+                           class="form-control book-input"
+                           placeholder="Enter author name" />
+
+                    <span asp-validation-for="Author"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- ISBN -->
+
+                <div class="col-md-6">
+
+                    <label asp-for="ISBN"
+                           class="form-label">
+                        ISBN
+                    </label>
+
+                    <input asp-for="ISBN"
+                           class="form-control book-input"
+                           placeholder="Enter ISBN number" />
+
+                    <span asp-validation-for="ISBN"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Publisher -->
+
+                <div class="col-md-6">
+
+                    <label asp-for="Publisher"
+                           class="form-label">
+                        Publisher
+                    </label>
+
+                    <input asp-for="Publisher"
+                           class="form-control book-input"
+                           placeholder="Enter publisher name" />
+
+                    <span asp-validation-for="Publisher"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Publication Year -->
+
+                <div class="col-md-6">
+
+                    <label asp-for="PublicationYear"
+                           class="form-label">
+                        Publication Year
+                    </label>
+
+                    <input asp-for="PublicationYear"
+                           class="form-control book-input"
+                           placeholder="e.g. 2024"
+                           type="number" />
+
+                    <span asp-validation-for="PublicationYear"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Category -->
+
+                <div class="col-md-6">
+
+                    <label asp-for="CategoryId"
+                           class="form-label">
+                        Category
+                    </label>
+
+                    <select asp-for="CategoryId"
+                            class="form-select book-input"
+                            asp-items="@(ViewBag.Categories)">
+
+                        <option value="">
+                            -- Select Category --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="CategoryId"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Total Copies -->
+
+                <div class="col-md-6">
+
+                    <label asp-for="TotalCopies"
+                           class="form-label">
+                        Total Copies
+                    </label>
+
+                    <input asp-for="TotalCopies"
+                           class="form-control book-input"
+                           placeholder="Enter total copies"
+                           type="number"
+                           min="1" />
+
+                    <span asp-validation-for="TotalCopies"
+                          class="text-danger">
+                    </span>
+
+                    <small class="form-text">
+                        Available copies will automatically
+                        equal the total copies.
+                    </small>
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="col-12">
+
+                    <label asp-for="Description"
+                           class="form-label">
+                        Description
+                    </label>
+
+                    <textarea asp-for="Description"
+                              class="form-control book-input book-description"
+                              placeholder="Enter a short description about the book"
+                              rows="5">
+                    </textarea>
+
+                    <span asp-validation-for="Description"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= BUTTONS ================= -->
+
+            <div class="book-form-actions">
+
+                <a asp-action="Index"
+                   class="book-cancel-btn">
+                    ← Back to Books
+                </a>
+
+                <button type="submit"
+                        class="book-submit-btn">
+                    ✓ Add Book
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

@@ -1,0 +1,415 @@
+@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Create Account";
+}
+
+<div class="register-page">
+
+    <div class="register-container">
+
+        <!-- Left Brand Section -->
+
+        <div class="register-brand">
+
+            <div class="register-logo">
+                <img src="~/images/iubat-logo.png"
+                     alt="IUBAT Logo" />
+            </div>
+
+            <h1>
+                IUBAT Central Library
+            </h1>
+
+            <p class="register-tagline">
+                Knowledge for Innovation and Excellence
+            </p>
+
+            <div class="register-message">
+
+                <h2>
+                    Join Our Library
+                </h2>
+
+                <p>
+                    Create your library account and get access to
+                    books, digital resources and academic materials.
+                </p>
+
+                <div class="register-features">
+
+                    <div>
+                        📚 Browse Library Books
+                    </div>
+
+                    <div>
+                        💻 Explore E-Resources
+                    </div>
+
+                    <div>
+                        🔬 Access Research Materials
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Registration Form -->
+
+        <div class="register-form-section">
+
+            <div class="register-form-container">
+
+                <div class="register-heading">
+
+                    <div class="register-icon">
+                        👤
+                    </div>
+
+                    <h2>
+                        Create Account
+                    </h2>
+
+                    <p>
+                        Register for the IUBAT Central Library
+                    </p>
+
+                </div>
+
+
+                <!-- Validation -->
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3"
+                     role="alert">
+                </div>
+
+
+                <form id="registerForm"
+                      asp-route-returnUrl="@Model.ReturnUrl"
+                      method="post">
+
+                    <!-- Full Name -->
+
+                    <div class="mb-3">
+
+                        <label asp-for="Input.FullName"
+                               class="form-label">
+                            Full Name
+                        </label>
+
+                        <div class="register-input-wrapper">
+
+                            <span class="register-input-icon">
+                                👤
+                            </span>
+
+                            <input asp-for="Input.FullName"
+                                   class="form-control register-input"
+                                   autocomplete="name"
+                                   placeholder="Enter your full name" />
+
+                        </div>
+
+                        <span asp-validation-for="Input.FullName"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- University ID -->
+
+                    <div class="mb-3">
+
+                        <label asp-for="Input.UniversityId"
+                               id="universityIdLabel"
+                               class="form-label">
+
+                            University ID
+                            <span id="universityIdRequired">
+                                *
+                            </span>
+
+                        </label>
+
+                        <div class="register-input-wrapper">
+
+                            <span class="register-input-icon">
+                                🎓
+                            </span>
+
+                            <input asp-for="Input.UniversityId"
+                                   id="universityIdInput"
+                                   class="form-control register-input"
+                                   autocomplete="off"
+                                   placeholder="Enter your university ID" />
+
+                        </div>
+
+                        <span asp-validation-for="Input.UniversityId"
+                              class="text-danger">
+                        </span>
+
+                        <small id="universityIdHelp"
+                               class="text-muted">
+                            University ID is required for students.
+                        </small>
+
+                    </div>
+
+
+                    <!-- Email -->
+
+                    <div class="mb-3">
+
+                        <label asp-for="Input.Email"
+                               class="form-label">
+                            Email Address
+                        </label>
+
+                        <div class="register-input-wrapper">
+
+                            <span class="register-input-icon">
+                                ✉
+                            </span>
+
+                            <input asp-for="Input.Email"
+                                   class="form-control register-input"
+                                   autocomplete="email"
+                                   placeholder="Enter your email" />
+
+                        </div>
+
+                        <span asp-validation-for="Input.Email"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Account Type -->
+
+                    <div class="mb-3">
+
+                        <label asp-for="Input.Role"
+                               class="form-label">
+                            Account Type
+                        </label>
+
+                        <div class="register-input-wrapper">
+
+                            <span class="register-input-icon">
+                                🎓
+                            </span>
+
+                            <select asp-for="Input.Role"
+                                    id="roleSelect"
+                                    class="form-select register-select">
+
+                                <option value="">
+                                    -- Select Account Type --
+                                </option>
+
+                                <option value="Student">
+                                    Student
+                                </option>
+
+                                <option value="Faculty">
+                                    Faculty
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <span asp-validation-for="Input.Role"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Password -->
+
+                    <div class="mb-3">
+
+                        <label asp-for="Input.Password"
+                               class="form-label">
+                            Password
+                        </label>
+
+                        <div class="register-input-wrapper">
+
+                            <span class="register-input-icon">
+                                🔒
+                            </span>
+
+                            <input asp-for="Input.Password"
+                                   class="form-control register-input"
+                                   autocomplete="new-password"
+                                   placeholder="Create a password" />
+
+                        </div>
+
+                        <span asp-validation-for="Input.Password"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Confirm Password -->
+
+                    <div class="mb-4">
+
+                        <label asp-for="Input.ConfirmPassword"
+                               class="form-label">
+                            Confirm Password
+                        </label>
+
+                        <div class="register-input-wrapper">
+
+                            <span class="register-input-icon">
+                                🔐
+                            </span>
+
+                            <input asp-for="Input.ConfirmPassword"
+                                   class="form-control register-input"
+                                   autocomplete="new-password"
+                                   placeholder="Confirm your password" />
+
+                        </div>
+
+                        <span asp-validation-for="Input.ConfirmPassword"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Create Account -->
+
+                    <button id="registerSubmit"
+                            type="submit"
+                            class="btn register-button w-100">
+
+                        ✓ Create Account
+
+                    </button>
+
+                </form>
+
+
+                <!-- Login -->
+
+                <div class="login-section">
+
+                    <p class="mb-1">
+                        Already have a library account?
+                    </p>
+
+                    <a asp-page="./Login"
+                       asp-route-returnUrl="@Model.ReturnUrl"
+                       class="login-link">
+
+                        Sign In
+
+                    </a>
+
+                </div>
+
+
+                <!-- Back to Home -->
+
+                <div class="auth-back-home">
+
+                    <a asp-controller="Home"
+                       asp-action="Index"
+                       class="auth-back-home-btn">
+
+                        ← Back to Home
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const roleSelect =
+                document.getElementById("roleSelect");
+
+            const universityIdInput =
+                document.getElementById("universityIdInput");
+
+            const universityIdRequired =
+                document.getElementById("universityIdRequired");
+
+            const universityIdHelp =
+                document.getElementById("universityIdHelp");
+
+
+            function updateUniversityIdField() {
+
+                if (roleSelect.value === "Faculty") {
+
+                    // Faculty: University ID is optional
+
+                    universityIdInput.removeAttribute("required");
+
+                    universityIdRequired.textContent = "(Optional)";
+
+                    universityIdHelp.textContent =
+                        "University ID is optional for faculty members.";
+
+                }
+                else {
+
+                    // Student: University ID is required
+
+                    universityIdInput.setAttribute("required", "required");
+
+                    universityIdRequired.textContent = "*";
+
+                    universityIdHelp.textContent =
+                        "University ID is required for students.";
+
+                }
+
+            }
+
+
+            roleSelect.addEventListener(
+                "change",
+                updateUniversityIdField
+            );
+
+
+            // Run when page loads
+
+            updateUniversityIdField();
+
+        });
+
+    </script>
+
+}

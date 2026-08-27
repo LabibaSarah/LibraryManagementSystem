@@ -1,0 +1,138 @@
+﻿@model LibraryManagementSystem.Models.LibraryStatus
+
+@{
+    ViewData["Title"] = "Library Status";
+}
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1>Library Status</h1>
+
+            <p class="lead mb-0">
+                Control library status and working hours.
+            </p>
+        </div>
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+
+    <div asp-validation-summary="All"
+         class="text-danger mb-3">
+    </div>
+
+
+    <div class="card shadow-sm">
+
+        <div class="card-body p-4">
+
+            <h3>Library Settings</h3>
+
+            <hr />
+
+            <form asp-action="Index"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+
+                <!-- Library Status -->
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Library Status
+                    </label>
+
+                    <div class="form-check form-switch">
+
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="isOpen"
+                               value="true"
+                        @(Model.IsOpen ? "checked" : "") />
+
+                        <label class="form-check-label">
+
+                            @if (Model.IsOpen)
+                            {
+                                <span class="badge bg-success">
+                                    OPEN
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">
+                                    CLOSED
+                                </span>
+                            }
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Opening Time -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Opening Time
+                    </label>
+
+                    <input type="time"
+                           name="openingTime"
+                           value="@Model.OpeningTime.ToString(@"hh\:mm")"
+                           class="form-control" />
+
+                </div>
+
+
+                <!-- Closing Time -->
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Closing Time
+                    </label>
+
+                    <input type="time"
+                           name="closingTime"
+                           value="@Model.ClosingTime.ToString(@"hh\:mm")"
+                           class="form-control" />
+
+                </div>
+
+
+                <!-- Update Button -->
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Update Library Status
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,305 @@
+﻿@using System.Globalization
+
+@{
+    ViewData["Title"] = "Reports & Analytics";
+
+    var mostBorrowedBooks = ViewBag.MostBorrowedBooks
+        as IEnumerable<dynamic>;
+
+    var monthlyBorrowing = ViewBag.MonthlyBorrowing
+        as IEnumerable<dynamic>;
+}
+
+<div class="container py-5">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1>Reports & Analytics</h1>
+
+            <p class="lead mb-0">
+                View library statistics, borrowing reports and analytics.
+            </p>
+        </div>
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- Summary Cards -->
+    <div class="row">
+
+        <!-- Total Books -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm p-4 h-100">
+
+                <h5>Total Books</h5>
+
+                <h2>
+                    @ViewBag.TotalBooks
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Total physical copies in library.
+                </p>
+
+            </div>
+        </div>
+
+
+        <!-- Available Books -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm p-4 h-100">
+
+                <h5>Available Books</h5>
+
+                <h2>
+                    @ViewBag.AvailableBooks
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Currently available copies.
+                </p>
+
+            </div>
+        </div>
+
+
+        <!-- Total Transactions -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm p-4 h-100">
+
+                <h5>Total Transactions</h5>
+
+                <h2>
+                    @ViewBag.TotalTransactions
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Total borrowing transactions.
+                </p>
+
+            </div>
+        </div>
+
+
+        <!-- Today's Issues -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm p-4 h-100">
+
+                <h5>Today's Issues</h5>
+
+                <h2>
+                    @ViewBag.TodayIssues
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Books issued today.
+                </p>
+
+            </div>
+        </div>
+
+
+        <!-- Overdue Books -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm p-4 h-100">
+
+                <h5>Overdue Books</h5>
+
+                <h2 class="text-danger">
+                    @ViewBag.OverdueBooks
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Currently overdue transactions.
+                </p>
+
+            </div>
+        </div>
+
+
+        <!-- Total Fine -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm p-4 h-100">
+
+                <h5>Total Fine</h5>
+
+                <h2>
+                    @ViewBag.TotalFine.ToString("0.00") Tk
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Total recorded fines.
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Most Borrowed Books -->
+    <div class="card shadow-sm p-4 mt-3">
+
+        <h3>
+            Most Borrowed Books
+        </h3>
+
+        <p class="text-muted">
+            Top 10 most frequently borrowed books.
+        </p>
+
+        <hr />
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>#</th>
+                        <th>Book</th>
+                        <th>Borrow Count</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @{
+                        int rank = 1;
+                    }
+
+                    @if (mostBorrowedBooks != null &&
+                         mostBorrowedBooks.Any())
+                    {
+                        foreach (var book in mostBorrowedBooks)
+                        {
+                            <tr>
+
+                                <td>
+                                    @rank
+                                </td>
+
+                                <td>
+                                    @book.Title
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-primary">
+                                        @book.BorrowCount
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                            rank++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+
+                            <td colspan="3"
+                                class="text-center py-4">
+
+                                No borrowing data available.
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- Monthly Borrowing Report -->
+    <div class="card shadow-sm p-4 mt-4">
+
+        <h3>
+            Monthly Borrowing Report
+        </h3>
+
+        <p class="text-muted">
+            Borrowing activity for recent months.
+        </p>
+
+        <hr />
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>Year</th>
+                        <th>Month</th>
+                        <th>Total Borrowings</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @if (monthlyBorrowing != null &&
+                         monthlyBorrowing.Any())
+                    {
+                        foreach (var month in monthlyBorrowing)
+                        {
+                            <tr>
+
+                                <td>
+                                    @month.Year
+                                </td>
+
+                                <td>
+                                    @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month.Month)
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-success">
+                                        @month.Count
+                                    </span>
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+
+                            <td colspan="3"
+                                class="text-center py-4">
+
+                                No monthly borrowing data available.
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

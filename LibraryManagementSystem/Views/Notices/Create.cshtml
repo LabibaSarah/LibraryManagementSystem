@@ -1,0 +1,100 @@
+﻿@model LibraryManagementSystem.Models.Notice
+
+@{
+    ViewData["Title"] = "Create Notice";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h2>Create Notice</h2>
+
+                    <p class="text-muted">
+                        Add a new library notice.
+                    </p>
+
+                    <hr />
+
+                    <form asp-action="Create"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="text-danger mb-3">
+                        </div>
+
+                        <!-- Title -->
+
+                        <div class="mb-3">
+
+                            <label asp-for="Title"
+                                   class="form-label">
+                                Notice Title
+                            </label>
+
+                            <input asp-for="Title"
+                                   class="form-control"
+                                   placeholder="Enter notice title" />
+
+                            <span asp-validation-for="Title"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- Content -->
+
+                        <div class="mb-3">
+
+                            <label asp-for="Content"
+                                   class="form-label">
+                                Notice Content
+                            </label>
+
+                            <textarea asp-for="Content"
+                                      class="form-control"
+                                      rows="6"
+                                      placeholder="Write notice details...">
+                            </textarea>
+
+                            <span asp-validation-for="Content"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <div class="d-flex gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                Create Notice
+                            </button>
+
+                            <a asp-action="Index"
+                               class="btn btn-secondary">
+                                Back to Notices
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

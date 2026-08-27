@@ -1,0 +1,215 @@
+﻿@model LibraryManagementSystem.Models.EBook
+
+@{
+    ViewData["Title"] = "Add E-Book";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <!-- ================= HEADER ================= -->
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <div>
+
+                            <h2 class="mb-1">
+                                Add E-Book
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                Upload a digital book to the library collection.
+                            </p>
+
+                        </div>
+
+                        <a asp-action="Index"
+                           class="btn btn-secondary">
+
+                            ← Back
+
+                        </a>
+
+                    </div>
+
+                    <hr />
+
+
+                    <!-- ================= VALIDATION ================= -->
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
+
+
+                    <!-- ================= FORM ================= -->
+
+                    <form asp-action="Create"
+                          method="post"
+                          enctype="multipart/form-data">
+
+                        @Html.AntiForgeryToken()
+
+
+                        <!-- ================= TITLE ================= -->
+
+                        <div class="mb-3">
+
+                            <label asp-for="Title"
+                                   class="form-label">
+                                E-Book Title
+                            </label>
+
+                            <input asp-for="Title"
+                                   class="form-control"
+                                   placeholder="Enter e-book title" />
+
+                            <span asp-validation-for="Title"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- ================= AUTHOR ================= -->
+
+                        <div class="mb-3">
+
+                            <label asp-for="Author"
+                                   class="form-label">
+                                Author
+                            </label>
+
+                            <input asp-for="Author"
+                                   class="form-control"
+                                   placeholder="Enter author name" />
+
+                            <span asp-validation-for="Author"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- ================= CATEGORY ================= -->
+
+                        <div class="mb-3">
+
+                            <label asp-for="Category"
+                                   class="form-label">
+                                Category
+                            </label>
+
+                            <select asp-for="Category"
+                                    asp-items="ViewBag.Categories"
+                                    class="form-select">
+
+                                <option value="">
+                                    -- Select Category --
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="Category"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- ================= DESCRIPTION ================= -->
+
+                        <div class="mb-3">
+
+                            <label asp-for="Description"
+                                   class="form-label">
+                                Description
+                            </label>
+
+                            <textarea asp-for="Description"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Enter a short description of the e-book"></textarea>
+
+                            <span asp-validation-for="Description"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <!-- ================= PDF FILE ================= -->
+
+                        <div class="mb-4">
+
+                            <label for="pdfFile"
+                                   class="form-label">
+                                PDF File
+                            </label>
+
+                            <input type="file"
+                                   id="pdfFile"
+                                   name="pdfFile"
+                                   class="form-control"
+                                   accept=".pdf,application/pdf"
+                                   required />
+
+                            <small class="text-muted">
+                                Only PDF files are allowed.
+                            </small>
+
+                            <span class="text-danger">
+                                @Html.ValidationMessage("pdfFile")
+                            </span>
+
+                        </div>
+
+
+                        <!-- ================= BUTTONS ================= -->
+
+                        <div class="d-flex gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                📤 Upload E-Book
+
+                            </button>
+
+                            <a asp-action="Index"
+                               class="btn btn-secondary">
+
+                                Cancel
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync(
+            "_ValidationScriptsPartial");
+    }
+
+}

@@ -1,0 +1,146 @@
+﻿@model IEnumerable<LibraryManagementSystem.Models.Notice>
+
+@{
+    ViewData["Title"] = "Notice Management";
+}
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1>Notice Management</h1>
+
+            <p class="lead mb-0">
+                Create and manage library notices.
+            </p>
+        </div>
+
+        <div>
+
+            <a asp-action="Create"
+               class="btn btn-primary">
+                + Add New Notice
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="Index"
+               class="btn btn-secondary">
+                Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h3>
+                    Library Notices
+                </h3>
+
+                <span class="badge bg-primary">
+                    @Model.Count() Notices
+                </span>
+
+            </div>
+
+            <hr />
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Created At</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @if (Model.Any())
+                        {
+                            foreach (var notice in Model)
+                            {
+                                <tr>
+
+                                    <td>
+                                        <strong>
+                                            @notice.Title
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        @notice.Content
+                                    </td>
+
+                                    <td>
+                                        @notice.CreatedAt.ToString(
+                                            "dd MMM yyyy hh:mm tt")
+                                    </td>
+
+                                    <td>
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@notice.Id"
+                                           class="btn btn-primary btn-sm">
+                                            Edit
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@notice.Id"
+                                           class="btn btn-danger btn-sm">
+                                            Delete
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+
+                                <td colspan="4"
+                                    class="text-center py-4">
+
+                                    <strong>
+                                        No notices available.
+                                    </strong>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

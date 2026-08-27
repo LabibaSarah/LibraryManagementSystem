@@ -1,0 +1,123 @@
+﻿@{
+    ViewData["Title"] = "E-Resources";
+}
+
+<div class="library-page">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="library-page-header">
+
+        <h1>
+            E-Resources
+        </h1>
+
+        <p>
+            Explore digital learning resources and online academic materials.
+        </p>
+
+    </div>
+
+
+    <!-- ================= RESOURCE CARDS ================= -->
+
+    <div class="resource-grid">
+
+        <!-- E-Books -->
+
+        <div class="resource-card">
+
+            <div class="resource-icon">
+                📚
+            </div>
+
+            <h3>
+                E-Books
+            </h3>
+
+            <p>
+                Access digital books and academic reading materials.
+            </p>
+
+            <a asp-controller="Home"
+               asp-action="EBooks"
+               class="btn btn-success">
+
+                Explore E-Books
+
+            </a>
+
+        </div>
+
+
+        <!-- Research Articles -->
+
+        <div class="resource-card">
+
+            <div class="resource-icon">
+                📄
+            </div>
+
+            <h3>
+                Research Articles
+            </h3>
+
+            <p>
+                Find academic articles and research publications.
+            </p>
+
+            <a asp-controller="Home"
+               asp-action="ResearchArticles"
+               class="btn btn-success">
+
+                Browse Articles
+
+            </a>
+
+        </div>
+
+
+        <!-- Online Journals -->
+
+        <div class="resource-card">
+
+            <div class="resource-icon">
+                📰
+            </div>
+
+            <h3>
+                Online Journals
+            </h3>
+
+            <p>
+                Explore online journals and scholarly publications.
+            </p>
+
+            <a asp-controller="Home"
+               asp-action="Journals"
+               class="btn btn-success">
+
+                View Journals
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= BACK ================= -->
+
+    <div class="library-back">
+
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="btn btn-secondary">
+
+            ← Back to Home
+
+        </a>
+
+    </div>
+
+</div>

@@ -1,0 +1,247 @@
+@model IEnumerable<LibraryManagementSystem.Models.Category>
+
+@{
+    ViewData["Title"] = "Manage Categories";
+}
+
+<div class="category-page">
+
+    <div class="category-container">
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="category-header">
+
+            <div class="category-title-row">
+
+                <div class="category-icon">
+                    📁
+                </div>
+
+                <div>
+                    <h1>
+                        Manage Categories
+                    </h1>
+
+                    <p>
+                        Create and manage categories for organizing library books.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <a asp-action="Create"
+               class="category-add-btn">
+
+                <span>＋</span>
+                Add Category
+
+            </a>
+
+        </div>
+
+
+        <!-- ================= ALERTS ================= -->
+        @if (TempData["Success"] != null)
+        {
+            <div class="category-alert success-alert">
+
+                <span class="alert-icon">✓</span>
+
+                <span>
+                    @TempData["Success"]
+                </span>
+
+            </div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="category-alert error-alert">
+
+                <span class="alert-icon">!</span>
+
+                <span>
+                    @TempData["Error"]
+                </span>
+
+            </div>
+        }
+
+
+        <!-- ================= CATEGORY TABLE ================= -->
+
+        <div class="category-table-wrapper">
+
+            <table class="category-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Category Name
+                        </th>
+
+                        <th>
+                            Description
+                        </th>
+
+                        <th class="category-actions-column">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @if (Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <!-- Category Name -->
+
+                                <td>
+
+                                    <div class="category-name">
+
+                                        <div class="category-row-icon">
+                                            📚
+                                        </div>
+
+                                        <strong>
+                                            @item.Name
+                                        </strong>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- Description -->
+
+                                <td>
+
+                                    <span class="category-description">
+
+                                        @(string.IsNullOrWhiteSpace(item.Description)
+                                            ? "N/A"
+                                            : item.Description)
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Actions -->
+
+                                <td>
+
+                                    <div class="category-actions">
+
+                                        <!-- Edit -->
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.Id"
+                                           class="category-edit-btn">
+
+                                            <span>✏️</span>
+                                            Edit
+
+                                        </a>
+
+
+                                        <!-- Details -->
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@item.Id"
+                                           class="category-details-btn">
+
+                                            <span>👁️</span>
+                                            Details
+
+                                        </a>
+
+
+                                        <!-- Delete -->
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@item.Id"
+                                           class="category-delete-btn">
+
+                                            <span>🗑️</span>
+                                            Delete
+
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+
+                            <td colspan="3">
+
+                                <div class="category-empty">
+
+                                    <div class="empty-icon">
+                                        📁
+                                    </div>
+
+                                    <h4>
+                                        No Categories Found
+                                    </h4>
+
+                                    <p>
+                                        Add your first library category.
+                                    </p>
+
+                                    <a asp-action="Create"
+                                       class="category-add-btn">
+
+                                        ＋ Add Category
+
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- ================= BACK ================= -->
+
+        <div class="category-footer">
+
+            <a asp-controller="Admin"
+               asp-action="Index"
+               class="category-back-btn">
+
+                ← Back to Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,305 @@
+@model IEnumerable<LibraryManagementSystem.Models.Book>
+
+@{
+    ViewData["Title"] = "Books";
+}
+
+<div class="books-page">
+
+    <div class="books-container">
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="books-header">
+
+            <div>
+                <h1>
+                    📚 Books
+                </h1>
+
+                <p>
+                    Search and manage books in the library collection.
+                </p>
+            </div>
+
+            <a asp-action="Create"
+               class="books-add-btn">
+                + Add New Book
+            </a>
+
+        </div>
+
+
+        <!-- ================= SEARCH ================= -->
+
+        <div class="books-search-card">
+
+            <form asp-action="Index"
+                  method="get">
+
+                <div class="books-search-grid">
+
+                    <!-- Search -->
+
+                    <div class="books-search-field">
+
+                        <label>
+                            Search by Title or Author
+                        </label>
+
+                        <input type="text"
+                               name="searchString"
+                               value="@ViewBag.SearchString"
+                               class="books-search-input"
+                               placeholder="Enter book title or author..." />
+
+                    </div>
+
+
+                    <!-- Category -->
+
+                    <div class="books-search-field">
+
+                        <label>
+                            Filter by Category
+                        </label>
+
+                        <select name="categoryId"
+                                class="books-search-select">
+
+                            <option value="">
+                                -- All Categories --
+                            </option>
+
+                            @foreach (var category in ViewBag.Categories)
+                            {
+                                <option value="@category.Value"
+                                        selected="@(ViewBag.CategoryId?.ToString() == category.Value ? "selected" : null)">
+                                    @category.Text
+                                </option>
+                            }
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Buttons -->
+
+                    <div class="books-search-buttons">
+
+                        <button type="submit"
+                                class="books-search-btn">
+                            🔍 Search
+                        </button>
+
+                        <a asp-action="Index"
+                           class="books-clear-btn">
+                            Clear
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- ================= BOOK TABLE ================= -->
+
+        <div class="books-table-wrapper">
+
+            <table class="books-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>ISBN</th>
+                        <th>Publisher</th>
+                        <th>Publication Year</th>
+                        <th>Total Copies</th>
+                        <th>Available Copies</th>
+                        <th>Category</th>
+                        <th>Created At</th>
+                        <th class="books-actions-column">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @if (Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <!-- Title -->
+
+                                <td>
+                                    <strong>
+                                        @item.Title
+                                    </strong>
+                                </td>
+
+
+                                <!-- Author -->
+
+                                <td>
+                                    @item.Author
+                                </td>
+
+
+                                <!-- ISBN -->
+
+                                <td>
+                                    @(string.IsNullOrWhiteSpace(item.ISBN)
+                                        ? "N/A"
+                                        : item.ISBN)
+                                </td>
+
+
+                                <!-- Publisher -->
+
+                                <td>
+                                    @(string.IsNullOrWhiteSpace(item.Publisher)
+                                        ? "N/A"
+                                        : item.Publisher)
+                                </td>
+
+
+                                <!-- Publication Year -->
+
+                                <td>
+                                    @item.PublicationYear
+                                </td>
+
+
+                                <!-- Total Copies -->
+
+                                <td>
+                                    @item.TotalCopies
+                                </td>
+
+
+                                <!-- Available Copies -->
+
+                                <td>
+
+                                    <span class="available-count">
+                                        @item.AvailableCopies
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Category -->
+
+                                <td>
+                                    @(item.Category?.Name ?? "N/A")
+                                </td>
+
+
+                                <!-- Created At -->
+
+                                <td>
+                                    @item.CreatedAt.ToString("dd MMM yyyy")
+                                </td>
+
+
+                                <!-- Actions -->
+
+                                <td>
+
+                                    <div class="book-action-buttons">
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.Id"
+                                           class="book-edit-btn">
+                                            ✏️ Edit
+                                        </a>
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@item.Id"
+                                           class="book-details-btn">
+                                            👁️ Details
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@item.Id"
+                                           class="book-delete-btn">
+                                            🗑️ Delete
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+
+                            <td colspan="10">
+
+                                <div class="books-empty">
+
+                                    <div class="books-empty-icon">
+                                        📚
+                                    </div>
+
+                                    <h3>
+                                        No Books Found
+                                    </h3>
+
+                                    <p>
+                                        No books match your search criteria.
+                                    </p>
+
+                                    <a asp-action="Create"
+                                       class="books-add-btn">
+                                        + Add New Book
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- ================= BACK TO DASHBOARD ================= -->
+
+        <div class="books-footer">
+
+            <a asp-controller="Admin"
+               asp-action="Index"
+               class="books-back-btn">
+
+                ← Back to Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

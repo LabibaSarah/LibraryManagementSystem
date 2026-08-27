@@ -1,0 +1,58 @@
+@model LibraryManagementSystem.Models.Category
+
+@{
+    ViewData["Title"] = "Delete Category";
+}
+
+<div class="category-page">
+
+    <div class="category-delete-card">
+
+        <div class="delete-icon">
+            ⚠️
+        </div>
+
+        <h1>Delete Category</h1>
+
+        <p class="delete-warning">
+            Are you sure you want to delete this category?
+        </p>
+
+        <div class="delete-category-name">
+            @Model.Name
+        </div>
+
+        <div class="delete-description">
+
+            @(string.IsNullOrWhiteSpace(Model.Description)
+                ? "No description available."
+                : Model.Description)
+
+        </div>
+
+
+        <form asp-action="Delete"
+              method="post">
+
+            <input type="hidden"
+                   asp-for="Id" />
+
+            <div class="category-actions">
+
+                <button type="submit"
+                        class="category-delete-btn">
+                    🗑 Delete Category
+                </button>
+
+                <a asp-action="Index"
+                   class="category-cancel-btn">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

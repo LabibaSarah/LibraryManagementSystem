@@ -1,0 +1,97 @@
+@model LibraryManagementSystem.Models.Category
+
+@{
+    ViewData["Title"] = "Edit Category";
+}
+
+<div class="category-page">
+
+    <div class="category-form-card">
+
+        <div class="category-header">
+
+            <div class="category-icon">
+                🗂️
+            </div>
+
+            <div>
+                <h1>Edit Category</h1>
+                <p>Update the library category information.</p>
+            </div>
+
+        </div>
+
+        <hr />
+
+        <form asp-action="Edit" method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <input type="hidden" asp-for="Id" />
+
+            <!-- Category Name -->
+
+            <div class="category-form-group">
+
+                <label asp-for="Name">
+                    Category Name
+                </label>
+
+                <input asp-for="Name"
+                       class="form-control category-input"
+                       placeholder="Enter category name" />
+
+                <span asp-validation-for="Name"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Description -->
+
+            <div class="category-form-group">
+
+                <label asp-for="Description">
+                    Description
+                </label>
+
+                <textarea asp-for="Description"
+                          class="form-control category-textarea"
+                          rows="4"
+                          placeholder="Enter category description"></textarea>
+
+                <span asp-validation-for="Description"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <div class="category-actions">
+
+                <button type="submit"
+                        class="category-save-btn">
+                    ✓ Save Changes
+                </button>
+
+                <a asp-action="Index"
+                   class="category-cancel-btn">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

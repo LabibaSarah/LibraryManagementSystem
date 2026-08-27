@@ -1,0 +1,185 @@
+﻿@model LibraryManagementSystem.Data.ApplicationUser
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="container py-5">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1>My Profile</h1>
+
+            <p class="lead mb-0">
+                View and update your faculty profile.
+            </p>
+        </div>
+
+        <a asp-controller="Faculty"
+           asp-action="Index"
+           class="btn btn-secondary">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- ================= SUCCESS MESSAGE ================= -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            ✓ @TempData["Success"]
+        </div>
+    }
+
+
+    <!-- ================= VALIDATION ================= -->
+
+    <div asp-validation-summary="All"
+         class="text-danger mb-3">
+    </div>
+
+
+    <!-- ================= PERSONAL INFORMATION ================= -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-body p-4">
+
+            <h3 class="mb-4">
+                Personal Information
+            </h3>
+
+            <form asp-controller="Faculty"
+                  asp-action="Profile"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+
+                <!-- Full Name -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Full Name
+                    </label>
+
+                    <input type="text"
+                           name="fullName"
+                           value="@Model.FullName"
+                           class="form-control"
+                           placeholder="Enter your full name"
+                           required />
+
+                    <span class="text-danger">
+                        @Html.ValidationMessage("FullName")
+                    </span>
+
+                </div>
+
+
+                <!-- University ID -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        University ID
+                    </label>
+
+                    <input type="text"
+                           name="universityId"
+                           value="@Model.UniversityId"
+                           class="form-control"
+                           placeholder="Optional for faculty" />
+
+                    <small class="text-muted">
+                        University ID is optional for faculty members.
+                    </small>
+
+                    <span class="text-danger">
+                        @Html.ValidationMessage("UniversityId")
+                    </span>
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Email
+                    </label>
+
+                    <input type="email"
+                           value="@Model.Email"
+                           class="form-control"
+                           readonly />
+
+                    <small class="text-muted">
+                        Your email address cannot be changed here.
+                    </small>
+
+                </div>
+
+
+                <!-- Update Button -->
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Update Profile
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= CHANGE PASSWORD ================= -->
+
+    <div class="card shadow-sm mt-4">
+
+        <div class="card-body p-4">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <h3 class="mb-1">
+                        Change Password
+                    </h3>
+
+                    <p class="text-muted mb-0">
+                        Update your account password securely.
+                    </p>
+
+                </div>
+
+                <a asp-controller="Faculty"
+                   asp-action="ChangePassword"
+                   class="btn btn-warning">
+                    Change Password
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync(
+            "_ValidationScriptsPartial");
+    }
+
+}

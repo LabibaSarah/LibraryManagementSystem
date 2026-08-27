@@ -1,0 +1,266 @@
+﻿@model IEnumerable<LibraryManagementSystem.Models.EBook>
+
+@{
+    ViewData["Title"] = "E-Books";
+}
+
+<div class="library-page">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="library-page-header">
+
+        <div class="resource-icon">
+            📚
+        </div>
+
+        <h1>
+            E-Books
+        </h1>
+
+        <p>
+            Explore digital books and academic reading materials
+            available in the library.
+        </p>
+
+    </div>
+
+
+    <!-- ================= E-BOOKS ================= -->
+
+    <div class="ebook-grid">
+
+        @if (Model.Any())
+        {
+            foreach (var ebook in Model)
+            {
+                <div class="ebook-card">
+
+                    <!-- Icon -->
+
+                    <div class="ebook-icon">
+                        📖
+                    </div>
+
+
+                    <!-- Title -->
+
+                    <h3>
+                        @ebook.Title
+                    </h3>
+
+
+                    <!-- Author -->
+
+                    <p class="ebook-author">
+                        <strong>Author:</strong>
+                        @ebook.Author
+                    </p>
+
+
+                    <!-- Category -->
+                    @if (!string.IsNullOrWhiteSpace(ebook.Category))
+                    {
+                        <span class="ebook-category">
+                            @ebook.Category
+                        </span>
+                    }
+
+
+                    <!-- Description -->
+
+                    <p class="ebook-description">
+
+                        @(string.IsNullOrWhiteSpace(ebook.Description)
+                            ? "No description available."
+                            : ebook.Description)
+
+                    </p>
+
+
+                    <!-- Uploaded Date -->
+
+                    <p class="ebook-date">
+
+                        Uploaded:
+                        @ebook.UploadedAt.ToString("dd MMM yyyy")
+
+                    </p>
+
+
+                    <!-- Read PDF -->
+
+                    <a href="@ebook.FilePath"
+                       target="_blank"
+                       class="ebook-read-btn">
+
+                        📄 Read PDF
+
+                    </a>
+
+                </div>
+            }
+        }
+        else
+        {
+            <!-- Empty State -->
+
+            <div class="ebook-empty">
+
+                <div class="ebook-empty-icon">
+                    📚
+                </div>
+
+                <h2>
+                    No E-Books Available
+                </h2>
+
+                <p>
+                    No digital books have been uploaded to the library yet.
+                </p>
+
+            </div>
+        }
+
+    </div>
+
+
+    <!-- ================= BACK ================= -->
+
+    <div class="library-back">
+
+        <a asp-controller="Home"
+           asp-action="EResources"
+           class="btn btn-secondary">
+
+            ← Back to E-Resources
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- ================= E-BOOK CSS ================= -->
+
+<style>
+
+    .ebook-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-top: 40px;
+    }
+
+    .ebook-card {
+        background: #ffffff;
+        border: 1px solid #d8e8df;
+        border-radius: 16px;
+        padding: 28px;
+        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+        transition: all 0.25s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .ebook-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
+        }
+
+    .ebook-icon {
+        width: 65px;
+        height: 65px;
+        border-radius: 14px;
+        background: #e9f7f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        margin-bottom: 18px;
+    }
+
+    .ebook-card h3 {
+        color: #007a43;
+        font-size: 22px;
+        margin-bottom: 12px;
+    }
+
+    .ebook-author {
+        color: #4f6b7a;
+        margin-bottom: 10px;
+    }
+
+    .ebook-category {
+        display: inline-block;
+        background: #e7f5ee;
+        color: #007a43;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        align-self: flex-start;
+    }
+
+    .ebook-description {
+        color: #61758a;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        flex-grow: 1;
+    }
+
+    .ebook-date {
+        color: #7b8794;
+        font-size: 13px;
+        margin-bottom: 18px;
+    }
+
+    .ebook-read-btn {
+        display: inline-block;
+        text-align: center;
+        background: #00844a;
+        color: white;
+        text-decoration: none;
+        padding: 11px 18px;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+        .ebook-read-btn:hover {
+            background: #006b3c;
+            color: white;
+        }
+
+    .ebook-empty {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 70px 20px;
+        background: white;
+        border: 1px solid #d8e8df;
+        border-radius: 16px;
+    }
+
+    .ebook-empty-icon {
+        font-size: 55px;
+        margin-bottom: 15px;
+    }
+
+    .ebook-empty h2 {
+        color: #007a43;
+    }
+
+    .ebook-empty p {
+        color: #61758a;
+    }
+
+
+    @@media (max-width: 768px) {
+
+        .ebook-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+</style>

@@ -1,0 +1,311 @@
+﻿@model IEnumerable<LibraryManagementSystem.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Issue & Return";
+}
+
+<div class="container py-5">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="mb-4">
+
+        <h1>
+            Issue & Return Management
+        </h1>
+
+        <p class="lead">
+            Manage library book issuing and returning.
+        </p>
+
+    </div>
+
+
+    <!-- ================= ALERT MESSAGES ================= -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success mb-4">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger mb-4">
+            @TempData["Error"]
+        </div>
+    }
+
+
+    <!-- ================= ISSUE BOOK ================= -->
+
+    <div class="card shadow-sm p-4 mb-5">
+
+        <h3>
+            Issue Book
+        </h3>
+
+        <hr />
+
+        <form asp-action="Issue" method="post">
+
+            <div class="row">
+
+                <!-- User -->
+
+                <div class="col-md-5 mb-3">
+
+                    <label class="form-label">
+                        Student / Faculty
+                    </label>
+
+                    <select name="userId"
+                            class="form-select"
+                            asp-items="ViewBag.Users">
+
+                        <option value="">
+                            -- Select User --
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Book -->
+
+                <div class="col-md-5 mb-3">
+
+                    <label class="form-label">
+                        Book
+                    </label>
+
+                    <select name="bookId"
+                            class="form-select"
+                            asp-items="ViewBag.Books">
+
+                        <option value="">
+                            -- Select Book --
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Issue Button -->
+
+                <div class="col-md-2 mb-3 d-flex align-items-end">
+
+                    <button type="submit"
+                            class="btn btn-primary w-100">
+
+                        Issue Book
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- ================= TRANSACTION HISTORY ================= -->
+
+    <div class="card shadow-sm p-4">
+
+        <h3>
+            Transaction History
+        </h3>
+
+        <hr />
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>User</th>
+
+                        <th>Book</th>
+
+                        <th>Issue Date</th>
+
+                        <th>Due Date</th>
+
+                        <th>Return Date</th>
+
+                        <th>Fine</th>
+
+                        <th>Status</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @if (Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <!-- User -->
+
+                                <td>
+                                    @(item.User?.FullName ?? "Unknown User")
+                                </td>
+
+
+                                <!-- Book -->
+
+                                <td>
+                                    @(item.Book?.Title ?? "Unknown Book")
+                                </td>
+
+
+                                <!-- Issue Date -->
+
+                                <td>
+                                    @item.IssueDate.ToString("dd MMM yyyy")
+                                </td>
+
+
+                                <!-- Due Date -->
+
+                                <td>
+                                    @item.DueDate.ToString("dd MMM yyyy")
+                                </td>
+
+
+                                <!-- Return Date -->
+
+                                <td>
+
+                                    @(item.ReturnDate.HasValue
+                                        ? item.ReturnDate.Value.ToString("dd MMM yyyy")
+                                        : "-")
+
+                                </td>
+
+
+                                <!-- Fine -->
+
+                                <td>
+                                    @item.Fine.ToString("0.00") Tk
+                                </td>
+
+
+                                <!-- Status -->
+
+                                <td>
+
+                                    @if (item.ReturnDate == null)
+                                    {
+                                        if (DateTime.Now.Date > item.DueDate.Date)
+                                        {
+                                            <span class="badge bg-danger">
+                                                Overdue
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning text-dark">
+                                                Borrowed
+                                            </span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success">
+                                            Returned
+                                        </span>
+                                    }
+
+                                </td>
+
+
+                                <!-- Action -->
+
+                                <td>
+
+                                    @if (item.ReturnDate == null)
+                                    {
+                                        <form asp-action="Return"
+                                              method="post">
+
+                                            <input type="hidden"
+                                                   name="id"
+                                                   value="@item.Id" />
+
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-success">
+
+                                                Return
+
+                                            </button>
+
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">
+                                            Completed
+                                        </span>
+                                    }
+
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+
+                            <td colspan="8"
+                                class="text-center py-4">
+
+                                <strong>
+                                    No transactions found.
+                                </strong>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= BACK TO DASHBOARD ================= -->
+
+    <div class="text-center mt-5 mb-4">
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="transaction-back-btn">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>

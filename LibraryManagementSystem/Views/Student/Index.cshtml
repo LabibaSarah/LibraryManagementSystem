@@ -1,0 +1,316 @@
+﻿@model IEnumerable<LibraryManagementSystem.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Student Dashboard";
+}
+
+<div class="container py-5">
+
+    <!-- ================= HEADER ================= -->
+    <!-- ================= HEADER ================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h1>
+                Student Dashboard
+            </h1>
+
+            <p class="lead mb-0">
+                Welcome to your student library dashboard.
+            </p>
+
+        </div>
+
+
+        <!-- Header Actions -->
+
+        <div class="d-flex gap-2 align-items-center">
+
+            <!-- Back to Home -->
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="btn btn-secondary">
+                ← Back to Home
+            </a>
+
+
+            <!-- Logout -->
+
+            <form asp-area="Identity"
+                  asp-page="/Account/Logout"
+                  method="post"
+                  class="m-0">
+
+                <button type="submit"
+                        class="dashboard-logout-btn">
+                    🚪 Logout
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================== DASHBOARD CARDS ==================== -->
+    <!-- ================= STUDENT STATISTICS ================= -->
+
+    <div class="row g-4 mb-5">
+
+        <!-- Borrowed -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h3>
+                        📚 @ViewBag.BorrowedCount
+                    </h3>
+
+                    <p class="mb-0">
+                        Currently Borrowed
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Overdue -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h3>
+                        ⚠️ @ViewBag.OverdueCount
+                    </h3>
+
+                    <p class="mb-0">
+                        Overdue Books
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Fine -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h3>
+                        💰 @ViewBag.TotalFine.ToString("0.00") Tk
+                    </h3>
+
+                    <p class="mb-0">
+                        Total Fine
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row mt-4">
+
+        <!-- Borrowed Books -->
+
+        <div class="col-md-6 mb-4">
+
+            <div class="card shadow-sm p-4 h-100">
+
+                <h4>Borrowed Books</h4>
+
+                <p>
+                    View your currently borrowed books.
+                </p>
+
+                <a href="#borrowed-books"
+                   class="btn btn-primary mt-2">
+                    View Books
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Profile -->
+
+        <div class="col-md-6 mb-4">
+
+            <div class="card shadow-sm p-4 h-100">
+
+                <h4>Profile</h4>
+
+                <p>
+                    View and update your profile.
+                </p>
+
+                <a asp-action="Profile"
+                   class="btn btn-primary mt-2">
+                    View Profile
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================== MY BORROWED BOOKS ==================== -->
+
+    <div id="borrowed-books"
+         class="card shadow-sm p-4 mt-4">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h3>
+                My Borrowed Books
+            </h3>
+
+            <span class="badge bg-primary">
+                @Model.Count() Transactions
+            </span>
+
+        </div>
+
+        <hr />
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>Book</th>
+                        <th>Issue Date</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                        <th>Fine</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @if (Model.Any())
+                    {
+                        foreach (var transaction in Model)
+                        {
+                            <tr>
+
+                                <!-- Book -->
+
+                                <td>
+                                    <strong>
+                                        @(transaction.Book?.Title ?? "Unknown Book")
+                                    </strong>
+                                </td>
+
+
+                                <!-- Issue Date -->
+
+                                <td>
+                                    @transaction.IssueDate.ToString("dd MMM yyyy")
+                                </td>
+
+
+                                <!-- Due Date -->
+
+                                <td>
+                                    @transaction.DueDate.ToString("dd MMM yyyy")
+                                </td>
+
+
+                                <!-- Return Date -->
+
+                                <td>
+                                    @(transaction.ReturnDate.HasValue
+                                        ? transaction.ReturnDate.Value.ToString("dd MMM yyyy")
+                                        : "-")
+                                </td>
+
+
+                                <!-- Fine -->
+
+                                <td>
+                                    @transaction.Fine.ToString("0.00") Tk
+                                </td>
+
+
+                                <!-- Status -->
+
+                                <td>
+
+                                    @if (transaction.ReturnDate != null)
+                                    {
+                                        <span class="badge bg-success">
+                                            Returned
+                                        </span>
+                                    }
+                                    else if (DateTime.Now.Date > transaction.DueDate.Date)
+                                    {
+                                        <span class="badge bg-danger">
+                                            Overdue
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark">
+                                            Borrowed
+                                        </span>
+                                    }
+
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+
+                            <td colspan="6"
+                                class="text-center py-4">
+
+                                <strong>
+                                    You have no borrowed books.
+                                </strong>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

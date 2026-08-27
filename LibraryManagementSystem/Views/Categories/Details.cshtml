@@ -1,0 +1,71 @@
+@model LibraryManagementSystem.Models.Category
+
+@{
+    ViewData["Title"] = "Category Details";
+}
+
+<div class="category-page">
+
+    <div class="category-details-card">
+
+        <div class="category-header">
+
+            <div class="category-icon">
+                🗂️
+            </div>
+
+            <div>
+                <h1>Category Details</h1>
+                <p>View information about this library category.</p>
+            </div>
+
+        </div>
+
+        <hr />
+
+        <div class="category-detail-item">
+
+            <span class="detail-label">
+                Category Name
+            </span>
+
+            <span class="detail-value">
+                @Model.Name
+            </span>
+
+        </div>
+
+
+        <div class="category-detail-item">
+
+            <span class="detail-label">
+                Description
+            </span>
+
+            <span class="detail-value">
+                @(string.IsNullOrWhiteSpace(Model.Description)
+                    ? "No description available."
+                    : Model.Description)
+            </span>
+
+        </div>
+
+
+        <div class="category-actions">
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.Id"
+               class="category-save-btn">
+                ✏️ Edit Category
+            </a>
+
+            <a asp-action="Index"
+               class="category-cancel-btn">
+                ← Back to Categories
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

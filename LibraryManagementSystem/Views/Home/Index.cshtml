@@ -1,0 +1,837 @@
+﻿@using LibraryManagementSystem.Models
+
+@{
+    ViewData["Title"] = "IUBAT Central Library";
+
+    var categories =
+        ViewBag.Categories as IEnumerable<Category>
+        ?? Enumerable.Empty<Category>();
+}
+
+<!-- =========================
+     TOP BAR
+========================= -->
+
+<div class="library-topbar">
+
+    <div class="topbar-left">
+
+        <span>✉ library@iubat.edu</span>
+
+        <span class="top-divider">|</span>
+
+        <span>☎ +880 1717 123456</span>
+
+    </div>
+
+
+    <div class="topbar-right">
+
+        <span class="status-dot"></span>
+
+        <span>
+            Library Status:
+            <strong>OPEN</strong>
+        </span>
+
+        <span class="top-divider">|</span>
+
+        <span>8:00 AM - 8:30 PM</span>
+
+        <span class="top-divider">|</span>
+
+        <a asp-controller="Home"
+           asp-action="Services">
+            Help
+        </a>
+
+        <span class="top-divider">|</span>
+
+        <a asp-controller="Home"
+           asp-action="Services">
+            FAQ
+        </a>
+
+        <span class="top-divider">|</span>
+
+        <a asp-controller="Home"
+           asp-action="About">
+            Contact Us
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MAIN NAVBAR
+========================= -->
+
+<nav class="library-navbar">
+
+    <div class="library-brand">
+
+        <div class="library-logo">
+
+            <img src="~/images/iubat-logo.png"
+                 alt="IUBAT Logo" />
+
+        </div>
+
+
+        <div>
+
+            <div class="library-name">
+                IUBAT Central Library
+            </div>
+
+            <div class="library-tagline">
+                Knowledge for Innovation and Excellence
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="library-nav-links">
+
+        <!-- Home -->
+
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="active">
+            Home
+        </a>
+
+
+        <!-- Books -->
+
+        <a asp-controller="LibraryBooks"
+           asp-action="Index">
+            Books
+        </a>
+
+
+        <!-- E-Resources -->
+
+        <a asp-controller="Home"
+           asp-action="EResources">
+            E-Resources
+        </a>
+
+
+        <!-- Thesis -->
+
+        <a asp-controller="Home"
+           asp-action="Thesis">
+            Thesis & Reports
+        </a>
+
+
+        <!-- Research -->
+
+        <a asp-controller="Home"
+           asp-action="Research">
+            Research Support
+        </a>
+
+
+        <!-- Services -->
+
+        <a asp-controller="Home"
+           asp-action="Services">
+            Services
+        </a>
+
+
+        <!-- About -->
+
+        <a asp-controller="Home"
+           asp-action="About">
+            About Us
+        </a>
+
+
+        <!-- =====================================================
+             LOGIN / DASHBOARD
+        ====================================================== -->
+        @if (User.Identity != null &&
+                     User.Identity.IsAuthenticated)
+        {
+            @if (User.IsInRole("Student"))
+            {
+                <a asp-controller="Student"
+                   asp-action="Index"
+                   class="login-button">
+                    🏠 Dashboard
+                </a>
+            }
+            else if (User.IsInRole("Faculty"))
+            {
+                <a asp-controller="Faculty"
+                   asp-action="Index"
+                   class="login-button">
+                    🏠 Dashboard
+                </a>
+            }
+            else if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="Admin"
+                   asp-action="Index"
+                   class="login-button">
+                    🏠 Dashboard
+                </a>
+            }
+
+
+            <!-- Logout -->
+
+            <form asp-area="Identity"
+                  asp-page="/Account/Logout"
+                  method="post"
+                  class="logout-form">
+
+                <button type="submit"
+                        class="logout-button">
+                    🚪 Logout
+                </button>
+
+            </form>
+        }
+        else
+        {
+            <!-- Login -->
+
+            <a asp-area="Identity"
+               asp-page="/Account/Login"
+               class="login-button">
+                👤 Login
+            </a>
+        }
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     HERO SECTION
+========================= -->
+
+<section class="library-hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <h1>
+            Discover. Learn. Grow.
+        </h1>
+
+        <h2>
+            Welcome to IUBAT Central Library
+        </h2>
+
+        <p>
+            Your gateway to a world of knowledge, research and innovation.
+            <br />
+            Find the resources you need to succeed.
+        </p>
+
+
+        <!-- SEARCH BOX -->
+
+        <div class="hero-search">
+
+            <div class="search-tabs">
+
+                <button type="button"
+                        class="search-tab active">
+                    📖 Search Books
+                </button>
+
+                <button type="button"
+                        class="search-tab">
+                    📄 Search Articles
+                </button>
+
+                <button type="button"
+                        class="search-tab">
+                    📱 Search E-Books
+                </button>
+
+                <span class="search-tab advanced-search-text">
+                    🔎 Advanced Search
+                </span>
+
+            </div>
+
+
+            <form asp-controller="LibraryBooks"
+                  asp-action="Index"
+                  method="get"
+                  class="search-form">
+
+                <input type="text"
+                       name="search"
+                       placeholder="Search by title, author, ISBN or keyword..."
+                       class="hero-search-input" />
+
+
+                <select name="categoryId"
+                        class="hero-category">
+
+                    <option value="">
+                        All Categories
+                    </option>
+
+                    @foreach (var category in categories)
+                    {
+                        <option value="@category.Id">
+                            @category.Name
+                        </option>
+                    }
+
+                </select>
+
+
+                <button type="submit"
+                        class="hero-search-button">
+
+                    🔍 Search
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     QUICK ACCESS
+========================= -->
+
+<section class="quick-access">
+
+    <div class="section-title">
+
+        <h2>
+            Quick Access
+        </h2>
+
+        <div class="title-line"></div>
+
+    </div>
+
+
+    <div class="quick-grid">
+
+
+        <!-- Books -->
+
+        <a asp-controller="LibraryBooks"
+           asp-action="Index"
+           class="quick-card">
+
+            <div class="quick-icon">
+                📚
+            </div>
+
+            <div>
+
+                <h3>
+                    Books
+                </h3>
+
+                <p>
+                    Search our physical book collection
+                </p>
+
+            </div>
+
+            <span class="quick-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <!-- E-Books -->
+
+        <a asp-controller="Home"
+           asp-action="EResources"
+           class="quick-card">
+
+            <div class="quick-icon">
+                📱
+            </div>
+
+            <div>
+
+                <h3>
+                    E-Books
+                </h3>
+
+                <p>
+                    Explore our digital book collection
+                </p>
+
+            </div>
+
+            <span class="quick-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <!-- Thesis -->
+
+        <a asp-controller="Home"
+           asp-action="Thesis"
+           class="quick-card">
+
+            <div class="quick-icon">
+                🎓
+            </div>
+
+            <div>
+
+                <h3>
+                    Thesis & Reports
+                </h3>
+
+                <p>
+                    Access thesis, projects and reports
+                </p>
+
+            </div>
+
+            <span class="quick-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <!-- Journals -->
+
+        <a asp-controller="Home"
+           asp-action="EResources"
+           class="quick-card">
+
+            <div class="quick-icon">
+                📄
+            </div>
+
+            <div>
+
+                <h3>
+                    Journals
+                </h3>
+
+                <p>
+                    Browse research journals & articles
+                </p>
+
+            </div>
+
+            <span class="quick-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <!-- Research Support -->
+
+        <a asp-controller="Home"
+           asp-action="Research"
+           class="quick-card">
+
+            <div class="quick-icon">
+                👥
+            </div>
+
+            <div>
+
+                <h3>
+                    Research Support
+                </h3>
+
+                <p>
+                    Get help with academic research
+                </p>
+
+            </div>
+
+            <span class="quick-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <!-- Library Rules -->
+
+        <a asp-controller="Home"
+           asp-action="Services"
+           class="quick-card">
+
+            <div class="quick-icon">
+                📅
+            </div>
+
+            <div>
+
+                <h3>
+                    Library Rules
+                </h3>
+
+                <p>
+                    View library policies and guidelines
+                </p>
+
+            </div>
+
+            <span class="quick-arrow">
+                →
+            </span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     STATISTICS
+========================= -->
+
+<section class="library-statistics">
+
+    <div class="stat-item">
+
+        <div class="stat-icon">
+            📚
+        </div>
+
+        <div>
+
+            <h2>25,430+</h2>
+
+            <strong>
+                Books
+            </strong>
+
+            <p>
+                Physical Collection
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-item">
+
+        <div class="stat-icon">
+            📱
+        </div>
+
+        <div>
+
+            <h2>8,650+</h2>
+
+            <strong>
+                E-Books
+            </strong>
+
+            <p>
+                Digital Collection
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-item">
+
+        <div class="stat-icon">
+            👥
+        </div>
+
+        <div>
+
+            <h2>3,120+</h2>
+
+            <strong>
+                Members
+            </strong>
+
+            <p>
+                Registered Users
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-item">
+
+        <div class="stat-icon">
+            🏛
+        </div>
+
+        <div>
+
+            <h2>120+</h2>
+
+            <strong>
+                Journals
+            </strong>
+
+            <p>
+                Subscriptions
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-item">
+
+        <div class="stat-icon">
+            ↔
+        </div>
+
+        <div>
+
+            <h2>12,540+</h2>
+
+            <strong>
+                Issued Books
+            </strong>
+
+            <p>
+                This Year
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     SERVICES
+========================= -->
+
+<section class="library-services">
+
+    <div class="service-item">
+
+        <div class="service-icon">
+            ◷
+        </div>
+
+        <div>
+
+            <h3>
+                Extended Learning Hours
+            </h3>
+
+            <p>
+                We provide extended learning hours to support
+                your academic journey.
+            </p>
+
+            <strong>
+                8:00 AM - 8:30 PM (Everyday)
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="service-item">
+
+        <div class="service-icon">
+            ✓
+        </div>
+
+        <div>
+
+            <h3>
+                Knowledge & Integrity
+            </h3>
+
+            <p>
+                Committed to providing reliable resources
+                and maintaining academic integrity.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="service-item">
+
+        <div class="service-icon">
+            ◉
+        </div>
+
+        <div>
+
+            <h3>
+                Access Anywhere
+            </h3>
+
+            <p>
+                Access our digital resources anytime,
+                anywhere on any device.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="library-footer">
+
+    <div class="footer-content">
+
+
+        <!-- Library -->
+
+        <div>
+
+            <h3>
+                IUBAT Central Library
+            </h3>
+
+            <p>
+                Knowledge for Innovation and Excellence
+            </p>
+
+        </div>
+
+
+        <!-- Library Links -->
+
+        <div>
+
+            <h4>
+                Library
+            </h4>
+
+            <a asp-controller="LibraryBooks"
+               asp-action="Index">
+                Books
+            </a>
+
+            <a asp-controller="Home"
+               asp-action="EResources">
+                E-Resources
+            </a>
+
+            <a asp-controller="Home"
+               asp-action="Services">
+                Library Rules
+            </a>
+
+        </div>
+
+
+        <!-- Support -->
+
+        <div>
+
+            <h4>
+                Support
+            </h4>
+
+            <a asp-controller="Home"
+               asp-action="Research">
+                Research Support
+            </a>
+
+            <a asp-controller="Home"
+               asp-action="Services">
+                Ask Librarian
+            </a>
+
+            <a asp-controller="Home"
+               asp-action="About">
+                Contact Us
+            </a>
+
+        </div>
+
+
+        <!-- Opening Hours -->
+
+        <div>
+
+            <h4>
+                Opening Hours
+            </h4>
+
+            <p>
+                Sunday - Thursday
+            </p>
+
+            <p>
+                8:00 AM - 8:30 PM
+            </p>
+
+            <p>
+                Friday - Saturday
+            </p>
+
+            <p>
+                Closed / Limited Service
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 IUBAT Central Library. All rights reserved.
+        </span>
+
+        <div class="social-links">
+
+            <span>f</span>
+            <span>𝕏</span>
+            <span>◎</span>
+            <span>in</span>
+
+        </div>
+
+    </div>
+
+</footer>
